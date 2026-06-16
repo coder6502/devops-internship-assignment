@@ -44,3 +44,4 @@ jobs:
           ${{ secrets.DOCKERHUB_USERNAME }}/devops-app:latest
           ${{ secrets.DOCKERHUB_USERNAME }}/devops-app:${{ github.sha }}
           
+          
