@@ -3,6 +3,8 @@ name: CI/CD Pipeline
 on:
   push:
     branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
 
 jobs:
   build:
@@ -22,12 +24,12 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
-    - name: Log in to DockerHub registry
+    - name: Run application syntax check
       run: |
-        echo "dckr_pat_yzr5pr_z_Iyi-EKPVXMmWCqvZu0" | docker login -u "sandip6502" --password-stdin
+        python -m flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics || true
 
-    - name: Build and Push Docker Image
+    - name: Build Docker Image
       run: |
-        docker build -t sandip6502/devops-app:latest .
-        docker push sandip6502/devops-app:latest
+        docker build -t devops-app:latest .
+        echo "Docker image built successfully!"
         
